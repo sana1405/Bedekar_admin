@@ -2,6 +2,7 @@
 
 import type { Product, Rates } from "./types";
 import { idOf, labelOf, money } from "./types";
+import AdminIcon from "../components/AdminIcon";
 
 export default function DashboardOverview({ products, rates, onNavigate }: { products: Product[]; rates: Rates; onNavigate: (value: string) => void }) {
   return (
@@ -10,7 +11,7 @@ export default function DashboardOverview({ products, rates, onNavigate }: { pro
         <div>
           <p className="eyebrow">THURSDAY, 7 AUGUST 2026</p>
           <h1>
-            Good morning, Pranav <em>✦</em>
+            Pranav Bedekar <em>✦</em>
           </h1>
           <p className="muted">Here’s your store’s performance at a glance.</p>
         </div>
@@ -77,10 +78,11 @@ export default function DashboardOverview({ products, rates, onNavigate }: { pro
   );
 }
 
-function Metric({ icon, title, value, detail }: { icon: string; title: string; value: string; detail: string }) {
+function Metric({ title, value, detail }: { icon: string; title: string; value: string; detail: string }) {
+  const icon: "sales" | "orders" | "users" | "clock" = title === "Todayâ€™s sales" ? "sales" : title === "Orders received" ? "orders" : title === "New customers" ? "users" : "clock";
   return (
     <article className="metric">
-      <i>{icon}</i>
+      <i><AdminIcon name={icon} /></i>
       <div>
         <p>{title}</p>
         <h2>{value}</h2>

@@ -2,7 +2,9 @@
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import ConfirmDialog from "../components/ConfirmDialog";
+import AdminIcon from "../components/AdminIcon";
 import { api, createCategory, createProduct, createSubCategory, deleteCategory, deleteProduct, deleteSubCategory, getCategories, getProducts, getRegisteredUsers, getSubCategories, unwrap, updateCategory, updateProduct, updateSubCategory } from "../lib/api";
 import DashboardOverview from "./DashboardOverview";
 import EntityPage from "./EntityPage";
@@ -308,7 +310,7 @@ export default function DashboardApp() {
     <main className="admin">
       <aside className="side">
         <div className="brand">
-          <i>B</i>
+          <Image className="brand-logo" src="/images/logo.png" alt="Bedekar Jewellers" width={35} height={35} />
           <span>
             <b>BEDEKAR</b>
             <small>FINE JEWELS</small>
@@ -316,12 +318,12 @@ export default function DashboardApp() {
         </div>
 
         <div className="store">
-          <i>B</i>
+          <Image className="store-logo" src="/images/logo.png" alt="Bedekar Jewellers" width={29} height={29} />
           <span>
             <b>Bedekar Jewels</b>
             <small>Flagship Store</small>
           </span>
-          <em>âŒ„</em>
+          <em><AdminIcon name="sparkle" /> </em>
         </div>
 
         <nav>
@@ -356,7 +358,8 @@ export default function DashboardApp() {
             Bedekar Admin <b>/</b> {active}
           </div>
           <div className="header-actions">
-            <button onClick={() => notify("No new notifications")}>â™§</button>
+            <button className="notification-button" type="button" onClick={() => notify("No new notifications")} aria-label="Notifications"><AdminIcon name="bell" /></button>
+            {/* <button onClick={() => notify("No new notifications")}>â™§</button> */}
             <button className="avatar">AS</button>
             <button className="logout-button" onClick={() => setShowLogoutModal(true)}>Logout</button>
           </div>
@@ -420,6 +423,7 @@ export default function DashboardApp() {
       </section>
 
       {toast && <div className="toast">âœ“ {toast}</div>}
+      {toast && <div className="toast-notice" role="status"><AdminIcon name="check" />{toast}</div>}
 
       <CategoryFormDialog
         open={showCategoryModal}
@@ -520,7 +524,7 @@ export default function DashboardApp() {
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
               <h3 style={{ margin: 0, fontSize: 22, fontFamily: "Georgia, serif", color: "#2d231d" }}>Confirm logout</h3>
-              <button style={{ border: 0, background: "#f5eee8", color: "#6a5850", width: 32, height: 32, borderRadius: "50%", fontSize: 22, lineHeight: 1 }} onClick={() => setShowLogoutModal(false)}>Ã—</button>
+              <button style={{ border: 0, background: "#f5eee8", color: "#6a5850", width: 32, height: 32, borderRadius: "50%", fontSize: 22, lineHeight: 1 }} onClick={() => setShowLogoutModal(false)}><AdminIcon name="close" /></button>
             </div>
             <p style={{ margin: "0 0 20px", color: "#655e57", lineHeight: 1.6 }}>Are you sure you want to sign out of the admin panel?</p>
             <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>

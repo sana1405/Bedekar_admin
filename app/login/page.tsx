@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { loginAdmin } from "../lib/api";
 
 export default function LoginPage() {
@@ -35,7 +36,7 @@ export default function LoginPage() {
       <div className="login-card">
         <section>
           <div className="login-brand">
-            <i>B</i>
+            <Image className="brand-logo" src="/images/logo.png" alt="Bedekar Jewellers" width={35} height={35} />
             <span>
               BEDEKAR<small>FINE JEWELS</small>
             </span>
@@ -68,8 +69,9 @@ export default function LoginPage() {
         </section>
 
         <aside>
-          <p>EST. 1994</p>
-          <div className="login-jewel">✦</div>
+          <p>EST. 2009</p>
+          {/* <div className="login-jewel">✦</div> */}
+            <Image className="login-jewel" src="/images/logo.png" alt="Bedekar Jewellers" width={50} height={50} />
           <h2>Crafted to be<br />cherished forever.</h2>
           <span>Private access for Bedekar administrators</span>
         </aside>
