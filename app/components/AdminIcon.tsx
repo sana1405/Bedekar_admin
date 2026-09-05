@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-type IconName = "bell" | "check" | "chevronDown" | "close" | "plus" | "sparkle" | "sales" | "orders" | "users" | "clock";
+type IconName = "bell" | "check" | "chevronDown" | "close" | "plus" | "sparkle" | "sales" | "orders" | "users" | "clock" | "logout" | "filter";
 
 const paths: Record<IconName, ReactNode> = {
   bell: <><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" /><path d="M10 21h4" /></>,
@@ -13,6 +13,8 @@ const paths: Record<IconName, ReactNode> = {
   orders: <><rect x="4" y="6" width="16" height="14" rx="2" /><path d="M8 6V4h8v2m-8 5h8m-8 4h5" /></>,
   users: <><circle cx="12" cy="8" r="3" /><path d="M5 20a7 7 0 0 1 14 0" /></>,
   clock: <><circle cx="12" cy="12" r="8" /><path d="M12 8v5l3 2" /></>,
+  logout: <><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></>,
+  filter: <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />,
 };
 
 export default function AdminIcon({ name, size = 18 }: { name: IconName; size?: number }) {

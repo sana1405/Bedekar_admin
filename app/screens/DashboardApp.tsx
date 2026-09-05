@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -340,31 +340,46 @@ export default function DashboardApp() {
         </nav>
 
         <div className="sidefoot">
-          <span className="api-dot" />
-          {status}
-          <div className="profile">
-            <i>AS</i>
-            <span>
-              <b>Pranav Bedekar</b>
-              <small>Administrator</small>
-            </span>
+          <div className="sidefoot-status">
+            <span className="api-dot" />
+            <span className="status-text">{status}</span>
+          </div>
+
+          <div className="sidefoot-card">
+            <div className="profile">
+              <i>AS</i>
+              <div className="profile-info">
+                <b>Pranav Bedekar</b>
+                <small>Administrator</small>
+              </div>
+            </div>
+
+            <div className="sidefoot-actions">
+              <button
+                type="button"
+                className="sidefoot-btn"
+                title="Notifications"
+                aria-label="Notifications"
+                onClick={() => notify("No new notifications")}
+              >
+                <AdminIcon name="bell" size={16} />
+                <span className="notification-dot" />
+              </button>
+              <button
+                type="button"
+                className="sidefoot-btn logout"
+                title="Sign out"
+                aria-label="Sign out"
+                onClick={() => setShowLogoutModal(true)}
+              >
+                <AdminIcon name="logout" size={16} />
+              </button>
+            </div>
           </div>
         </div>
       </aside>
 
       <section className="area">
-        <header>
-          <div className="crumb">
-            Bedekar Admin <b>/</b> {active}
-          </div>
-          <div className="header-actions">
-            <button className="notification-button" type="button" onClick={() => notify("No new notifications")} aria-label="Notifications"><AdminIcon name="bell" /></button>
-            {/* <button onClick={() => notify("No new notifications")}>â™§</button> */}
-            <button className="avatar">AS</button>
-            <button className="logout-button" onClick={() => setShowLogoutModal(true)}>Logout</button>
-          </div>
-        </header>
-
         <div className="body">
           {active === "Dashboard" && <DashboardOverview products={products} rates={rates} onNavigate={setActive} />}
           {active === "Products" && !selectedProduct && (

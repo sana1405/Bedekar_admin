@@ -1,6 +1,8 @@
-﻿"use client";
+"use client";
 
+import { useEffect, useMemo, useState } from "react";
 import type { RegisteredUser } from "../lib/api";
+import Pagination from "../components/Pagination";
 
 type Props = { users: RegisteredUser[]; search: string; onSearch: (value: string) => void; loading: boolean; error: string };
 
@@ -8,7 +10,87 @@ const formatDate = (date?: string) => !date || Number.isNaN(new Date(date).getTi
 const initialsFor = (name: string) => name.split(" ").filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase() || "U";
 
 export default function UsersPage({ users, search, onSearch, loading, error }: Props) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(25);
+
   const query = search.trim().toLowerCase();
-  const visibleUsers = users.filter((user) => [user.name, user.mobile, user.email, user.address].filter((value): value is string => Boolean(value)).some((value) => value.toLowerCase().includes(query)));
-  return <section className="users-page"><div className="page-title"><p className="eyebrow">CUSTOMER ACCOUNTS</p><h1>Registered users</h1><p className="muted">Customers who have created an account in the Bedekar store.</p></div><div className="users-toolbar card"><label className="users-search" htmlFor="users-search"><span aria-hidden="true">Search</span><span className="sr-only">Search users</span><input id="users-search" type="search" value={search} onChange={(event) => onSearch(event.target.value)} placeholder="Search name, mobile, email or address" />{search && <button type="button" onClick={() => onSearch("")} aria-label="Clear search">Clear</button>}</label><span className="user-count"><b>{visibleUsers.length}</b> of {users.length} customers</span></div><div className="card users-table"><div className="users-table-heading"><div><p className="eyebrow">CUSTOMER DIRECTORY</p><h2>All customers</h2></div><span>{loading ? "Updating list..." : "Live from your store"}</span></div>{loading && !users.length ? <div className="users-state"><p>Loading registered users...</p></div> : error ? <div className="users-state error-state"><p>{error}</p></div> : visibleUsers.length ? <div className="users-table-scroll"><div className="users-head"><span>Customer</span><span>Mobile number</span><span>Email address</span><span>Joined</span></div>{visibleUsers.map((user) => <article className="users-row" key={user._id}><div className="user-identity"><span className="user-initials">{initialsFor(user.name)}</span><span><b>{user.name}</b><small>{user.address || "Address not provided"}</small></span></div><span>{user.mobile}</span><span>{user.email || "Not provided"}</span><time dateTime={user.createdAt}>{formatDate(user.createdAt)}</time></article>)}</div> : <div className="users-state"><p>{users.length ? "No registered users match your search." : "No customers have signed up yet."}</p></div>}</div></section>;
+  const visibleUsers = useMemo(() => {
+    return users.filter((user) => [user.name, user.mobile, user.email, user.address].filter((value): value is string => Boolean(value)).some((value) => value.toLowerCase().includes(query)));
+  }, [users, query]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
+  const paginatedUsers = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return visibleUsers.slice(start, start + pageSize);
+  }, [visibleUsers, currentPage, pageSize]);
+
+  return (
+    <section className="users-page">
+      <div className="page-title">
+        <p className="eyebrow">CUSTOMER ACCOUNTS</p>
+        <h1>Registered users</h1>
+        <p className="muted">Customers who have created an account in the Bedekar store.</p>
+      </div>
+
+      <div className="users-toolbar card">
+        <label className="users-search" htmlFor="users-search">
+          <span aria-hidden="true">Search</span>
+          <span className="sr-only">Search users</span>
+          <input id="users-search" type="search" value={search} onChange={(event) => onSearch(event.target.value)} placeholder="Search name, mobile, email or address" />
+          {search && <button type="button" onClick={() => onSearch("")} aria-label="Clear search">Clear</button>}
+        </label>
+        <span className="user-count"><b>{visibleUsers.length}</b> of {users.length} customers</span>
+      </div>
+
+      <div className="card users-table">
+        <div className="users-table-heading">
+          <div>
+            <p className="eyebrow">CUSTOMER DIRECTORY</p>
+            <h2>All customers</h2>
+          </div>
+          <span>{loading ? "Updating list..." : "Live from your store"}</span>
+        </div>
+
+        {loading && !users.length ? (
+          <div className="users-state"><p>Loading registered users...</p></div>
+        ) : error ? (
+          <div className="users-state error-state"><p>{error}</p></div>
+        ) : visibleUsers.length ? (
+          <div className="users-table-scroll">
+            <div className="users-head">
+              <span>Customer</span>
+              <span>Mobile number</span>
+              <span>Email address</span>
+              <span>Joined</span>
+            </div>
+            {paginatedUsers.map((user) => (
+              <article className="users-row" key={user._id}>
+                <div className="user-identity">
+                  <span className="user-initials">{initialsFor(user.name)}</span>
+                  <span><b>{user.name}</b><small>{user.address || "Address not provided"}</small></span>
+                </div>
+                <span>{user.mobile}</span>
+                <span>{user.email || "Not provided"}</span>
+                <time dateTime={user.createdAt}>{formatDate(user.createdAt)}</time>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="users-state"><p>{users.length ? "No registered users match your search." : "No customers have signed up yet."}</p></div>
+        )}
+      </div>
+
+      <Pagination
+        totalItems={visibleUsers.length}
+        currentPage={currentPage}
+        pageSize={pageSize}
+        onPageChange={setCurrentPage}
+        onPageSizeChange={setPageSize}
+        itemLabel="customers"
+      />
+    </section>
+  );
 }

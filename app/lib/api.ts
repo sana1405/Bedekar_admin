@@ -5,8 +5,9 @@ export type { Entity, Product };
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5000/api";
 export type AdminAuthUser = { _id: string; name: string; mobile: string; role: "admin"; token: string };
 export type RegisteredUser = { _id: string; name: string; mobile: string; email?: string; address?: string; createdAt?: string };
-const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "dcyehalfa";
-const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? "jewelry";
+const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "guz4qfnl";
+const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? "jewellry";
+const uploadFolder = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER ?? "jewellryProducts";
 
 export async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = typeof window !== "undefined" ? window.localStorage.getItem("aurelia_admin_token") : null;
@@ -33,7 +34,7 @@ export async function uploadProductImage(file: File): Promise<string> {
   const form = new FormData();
   form.append("file", file);
   form.append("upload_preset", uploadPreset);
-  form.append("folder", "products");
+  form.append("folder", uploadFolder);
   const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, { method: "POST", body: form });
   const result = await response.json();
   if (!response.ok || !result.secure_url) throw new Error(result.error?.message ?? "Image upload failed");
@@ -156,4 +157,3 @@ export const unwrap = <T,>(value: unknown): T[] => {
   if (value && typeof value === "object" && Array.isArray((value as { data?: T[] }).data)) return (value as { data: T[] }).data;
   return [];
 };
-
