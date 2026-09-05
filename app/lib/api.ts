@@ -2,7 +2,8 @@
 
 export type { Entity, Product };
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5000/api";
+// export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5000/api"; //loccal development server
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://bedekar-be.onrender.com/api"; //production server
 export type AdminAuthUser = { _id: string; name: string; mobile: string; role: "admin"; token: string };
 export type RegisteredUser = { _id: string; name: string; mobile: string; email?: string; address?: string; createdAt?: string };
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "guz4qfnl";

@@ -53,7 +53,7 @@ export default function DashboardApp() {
   const [subcategories, setSubcategories] = useState<Entity[]>(fallbackSubcategories);
   const [rates, setRates] = useState<Rates>({ gold24K: 7412, silverPerGram: 92.4 });
   const [history, setHistory] = useState<Rates[]>([]);
-  const [status, setStatus] = useState("Connecting to catalogue APIâ€¦");
+  const [status, setStatus] = useState("Connecting to catalogue API");
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState("");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -110,7 +110,7 @@ export default function DashboardApp() {
       setHistory(unwrap<Rates>(h));
       setStatus("Live API connected");
     } catch {
-      setStatus("Preview data shown â€” API server unavailable");
+      setStatus("Preview data shown” API server unavailable");
     }
   };
 
@@ -145,7 +145,7 @@ export default function DashboardApp() {
       setRates(response);
       setHistory(prev => [{ ...response, date: new Date().toISOString() }, ...prev]);
       setShowRateDialog(false);
-      notify("Todayâ€™s metal rates updated");
+      notify("Today’s metal rates updated");
     } catch (error) {
       notify(error instanceof Error ? error.message : "Unable to update rates");
     } finally {
@@ -437,7 +437,7 @@ export default function DashboardApp() {
         </div>
       </section>
 
-      {toast && <div className="toast">âœ“ {toast}</div>}
+      {toast && <div className="toast">{toast}</div>}
       {toast && <div className="toast-notice" role="status"><AdminIcon name="check" />{toast}</div>}
 
       <CategoryFormDialog
@@ -478,7 +478,7 @@ export default function DashboardApp() {
       <ConfirmDialog
         open={Boolean(productDeleteTarget)}
         title="Delete product"
-        message={productDeleteTarget ? `Are you sure you want to delete â€œ${productDeleteTarget.name ?? "this product"}â€? This action cannot be undone.` : "Are you sure you want to delete this product?"}
+        message={productDeleteTarget ? `Are you sure you want to delete ${productDeleteTarget.name ?? "this product"}? This action cannot be undone.` : "Are you sure you want to delete this product?"}
         confirmText="Delete"
         cancelText="Cancel"
         loading={deletingProduct}
@@ -501,7 +501,7 @@ export default function DashboardApp() {
       <ConfirmDialog
         open={Boolean(deleteTarget)}
         title="Delete category"
-        message={deleteTarget ? `Are you sure you want to delete â€œ${deleteTarget.name ?? "this category"}â€? This action cannot be undone.` : "Are you sure you want to delete this category?"}
+        message={deleteTarget ? `Are you sure you want to delete ${deleteTarget.name ?? "this category"}? This action cannot be undone.` : "Are you sure you want to delete this category?"}
         confirmText="Delete"
         cancelText="Cancel"
         loading={deletingCategory}
@@ -516,7 +516,7 @@ export default function DashboardApp() {
       <ConfirmDialog
         open={Boolean(subcategoryDeleteTarget)}
         title="Delete subcategory"
-        message={subcategoryDeleteTarget ? `Are you sure you want to delete â€œ${subcategoryDeleteTarget.name ?? "this subcategory"}â€? This action cannot be undone.` : "Are you sure you want to delete this subcategory?"}
+        message={subcategoryDeleteTarget ? `Are you sure you want to delete ${subcategoryDeleteTarget.name ?? "this subcategory"}? This action cannot be undone.` : "Are you sure you want to delete this subcategory?"}
         confirmText="Delete"
         cancelText="Cancel"
         loading={deletingSubcategory}

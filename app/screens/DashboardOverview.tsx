@@ -79,7 +79,7 @@ export default function DashboardOverview({ products, rates, onNavigate }: { pro
 }
 
 function Metric({ title, value, detail }: { icon: string; title: string; value: string; detail: string }) {
-  const icon: "sales" | "orders" | "users" | "clock" = title === "Todayâ€™s sales" ? "sales" : title === "Orders received" ? "orders" : title === "New customers" ? "users" : "clock";
+  const icon: "sales" | "orders" | "users" | "clock" = title === "Today’s sales" ? "sales" : title === "Orders received" ? "orders" : title === "New customers" ? "users" : "clock";
   return (
     <article className="metric">
       <i><AdminIcon name={icon} /></i>

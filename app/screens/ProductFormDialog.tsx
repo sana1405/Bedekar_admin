@@ -310,7 +310,7 @@ export default function ProductFormDialog({
           <div className="modal-actions page-actions">
             <button type="button" className="secondary-button" onClick={onClose} disabled={loading}>Cancel</button>
             <button type="button" className="gold" onClick={submit} disabled={loading}>
-              {loading ? "Savingâ€¦" : "Add product"}
+              {loading ? "Saving…" : "Add product"}
             </button>
           </div>
         </section>
@@ -443,7 +443,7 @@ export default function ProductFormDialog({
         <div className="modal-actions">
           <button type="button" className="secondary-button" onClick={onClose} disabled={loading}>Cancel</button>
           <button type="button" className="gold" onClick={submit} disabled={loading}>
-            {loading ? "Savingâ€¦" : "Add product"}
+            {loading ? "Saving…" : "Add product"}
           </button>
         </div>
       </div>
